@@ -1,0 +1,80 @@
+<html lang="en">
+
+<head>
+	<title>Minor Project</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link href="{{ url_for('static', filename='css/main-15.css') }}" rel="stylesheet">
+	<style>
+		#predictionAudio {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h1 class="display-4 margins margin-head">Upload an image to make a prediction</h1>
+
+		<form action="/predict" method="post" enctype="multipart/form-data" id="upload-file" class="container">
+			<input class="margins-top btn btn-warning btn-lg" type="file" name="image" value="Upload" id="imageUpload" accept=".png, .jpg, .jpeg">
+			<img class="margins-top" id="imgpreview" src="#"/>
+			<input  style="display:none;" type="submit" id="btn-predict" class="btn btn-primary btn-lg margins-top" value="Predict">
+		</form>
+
+		<h3 class="margins-top display-4 prediction-text">
+			{% if label %} {{ label }} {% endif %}
+		</h3>
+
+		<!-- Audio Playback Element -->
+		{% if audio_present %}
+		<audio id="predictionAudio" autoplay>
+			<source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+			Your browser does not support the audio element.
+		</audio>
+		{% endif %}
+
+		<!--<button type="button" id="btn-show-val" class=" margins btn btn-success btn-lg">Show Validation Results</button>
+		<button type="button" id="btn-hide-val" class=" margins btn btn-secondary btn-lg" style="display:none;">Hide Validation Results</button>
+		-->
+	</div>
+
+	<div id ="table-container" class="margins-table">
+			<div id="DirectEditPreserve" class="wow fadeInUp databaseTable_holder 122860">
+					<div id="DirectEditPreserve" class="databaseTable_heading">
+						<div id="DirectEditPreserve" class="databaseTable_title display-4">Validation Results</div>
+						<input id="DirectEditPreserve" class="databaseTable_search" type="text" width="200" placeholder="Search this table">
+					</div>
+					<div id="DirectEditPreserve" class="databaseTable">
+						<div id="DirectEditPreserve" class="databaseTable_import_wrap" style="display: block;">
+					</div>
+						<div id="DirectEditPreserve" class="databaseTable_UI_scrollLeft databaseTable_UI_button" style="display: none;"><!-- JS shows/hides by appending the .hidden class --></div>
+						<div id="DirectEditPreserve" class="databaseTable_UI_scrollRight databaseTable_UI_button" style="display: none;"><!-- JS shows/hides by appending the .hidden class --></div>
+					</div>
+				</div>
+
+	</div>
+
+</body>
+
+<footer>
+	<script src="{{ url_for('static', filename='js/main-40.js') }}" type="text/javascript"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var audio = document.getElementById('predictionAudio');
+			if (audio) {
+				audio.play().catch(function(error) {
+					console.error('Autoplay was prevented: ', error);
+				});
+			}
+		});
+	</script>
+</footer>
+
+</html>
